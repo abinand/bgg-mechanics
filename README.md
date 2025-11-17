@@ -32,19 +32,8 @@ Finally, a table visual was added and using DAX expressions, the selections in t
 
 ```dax
 Highest Ranked = 
-VAR BestRank = (
-    CALCULATE(
-        MIN('BGG_Data_Set'[BGG Rank]),
-        ALLSELECTED('BGG_Data_Set')
-    )
-)
-VAR TopGames = (
-    FILTER(
-        'BGG_Data_Set',
-        'BGG_Data_Set'[BGG Rank] = BestRank
-        )
-)
-RETURN CONCATENATEX(TopGames, 'BGG_Data_Set'[Name], ", ")
+VAR BestRank = MIN('BGG_Data_Set'[BGG Rank])
+RETURN CALCULATETABLE(VALUES(BGG_Data_Set[Name]), BGG_Data_Set[BGG Rank] = BestRank)
 ```
 
 
